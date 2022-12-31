@@ -31,13 +31,7 @@ fn main() {
                 let source       = v[3].parse::<usize>().unwrap();
                 let target       = v[5].parse::<usize>().unwrap();
                 
-                // println!(" ToMove: {num_to_move}, source: {source}, target: {target}");    
-                
-                for i in 0..num_to_move {
-                    let x = stacks[source-1].pop().unwrap();
-                    stacks[target-1].push(x);
-                    println!("Moved {x} from {source} to {target}" )
-                }
+                multimove(&mut stacks, num_to_move, source, target)
             }
         }
         print_stacks(&stacks);
@@ -49,8 +43,18 @@ fn main() {
 fn print_stacks (stacks: &Vec<Stack<char>>) {
     println!("stacks.len: {:?}", stacks.len());
     for i in 0..stacks.len() {
-
         println!("Top of Stack {}: {}", i+1, *stacks[i].peek().unwrap());
+    }
+}
+fn multimove( stacks: &mut Vec<Stack<char>>, num_to_move: usize, source: usize, target: usize) {
+    let mut tmp = Stack::<char>::new();
+    for i in 0..num_to_move {
+        let x = stacks[source-1].pop().unwrap();
+        tmp.push(x);
+    }
+    for i in 0..num_to_move {
+        let x = tmp.pop().unwrap();
+        stacks[target-1].push(x);
     }
 }
 
